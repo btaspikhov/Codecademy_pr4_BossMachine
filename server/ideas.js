@@ -45,13 +45,16 @@ ideasRouter.put('/:id', (req, res, next) => {
     }
 });
 
+//Reject insufficiently profitable ideas
+ideasRouter.post('/', (req, res, next) => {
+    checkMillionDollarIdea(req, res, next);
+});
+  
 // Create an idea
 ideasRouter.post('/', (req, res, next) => {
     
-    let createdIdea;
-    //if (checkMillionDollarIdea(req, res, next)) {
-        createdIdea = addToDatabase('ideas', req.body);
-    //}
+    let createdIdea = addToDatabase('ideas', req.body);
+  
     if (createdIdea) {
       res.status(201).send(createdIdea);
     } else {
